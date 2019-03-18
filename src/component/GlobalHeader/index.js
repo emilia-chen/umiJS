@@ -4,17 +4,18 @@ import moment from 'moment';
 import groupBy from 'lodash/groupBy';
 import Debounce from 'lodash-decorators/debounce';
 import Link from 'umi/link';
-import { FormattedMessage, setLocale, getLocale } from 'umi/locale';
+import { formatMessage,FormattedMessage, setLocale, getLocale } from 'umi/locale';
 import NoticeIcon from '../NoticeIcon';
 import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
+var _ = require('lodash');
 
 export default class GlobalHeader extends PureComponent {
   componentWillUnmount() {
     this.triggerResizeEvent.cancel();
   }
   getNoticeData() {
-    const { notices = [] } = this.props;
+    const { notices = [{type:'通知',read:true,description:'网断了'},{type:'消息',read:false,description:'断个屁'}] } = this.props;
     if (notices.length === 0) {
       return {};
     }
@@ -50,7 +51,7 @@ export default class GlobalHeader extends PureComponent {
     this.triggerResizeEvent();
   };
   /* eslint-disable*/
-  @Debounce(600)
+  @Debounce(5000)
   triggerResizeEvent() {
     const event = document.createEvent('HTMLEvents');
     event.initEvent('resize', true, false);
@@ -58,11 +59,20 @@ export default class GlobalHeader extends PureComponent {
   }
   changLang() {
     const locale = getLocale();
-    if (!locale || locale === 'zh-CN') {
-      setLocale('en-US');
-    } else {
-      setLocale('zh-CN');
-    }
+   console.log('locale',locale)
+
+const formatedText = formatMessage({
+  id: 'WELCOME_TO_UMI_WORLD'
+}, {
+  name: '小伙子',
+})
+ //console.log('formatedText',formatedText)
+
+    // if (!locale || locale === 'zh-CN') {
+    //   setLocale('en-US');
+    // } else {
+    //   setLocale('zh-CN');
+    // }
   }
   render() {
     const {
@@ -109,7 +119,7 @@ export default class GlobalHeader extends PureComponent {
         <div className={styles.right}>
           <HeaderSearch
             className={`${styles.action} ${styles.search}`}
-            placeholder="站内搜索"
+            placeholder={132}
             dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
             onSearch={value => {
               console.log('input', value); // eslint-disable-line
@@ -132,7 +142,8 @@ export default class GlobalHeader extends PureComponent {
             className={styles.action}
             count={currentUser.notifyCount}
             onItemClick={(item, tabProps) => {
-              console.log(item, tabProps); // eslint-disable-line
+
+              console.log('点击',item, tabProps); // eslint-disable-line
             }}
             onClear={onNoticeClear}
             onPopupVisibleChange={onNoticeVisibleChange}

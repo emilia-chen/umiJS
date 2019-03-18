@@ -23,6 +23,7 @@ class BasicLayout extends Component {
 
   render() {
     const { children, location } = this.props;
+  console.log('children',children);
     const { collapsed } = this.state;
     return (
       <Layout>

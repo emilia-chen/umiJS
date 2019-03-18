@@ -48,6 +48,7 @@ function formatter(data, parentPath = '/', parentAuthority) {
     if (item.children) {
       result.children = formatter(item.children, `${parentPath}${item.path}/`, item.authority);
     }
+    //console.log('result',result)
     return result;
   });
 }

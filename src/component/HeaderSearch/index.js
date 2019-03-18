@@ -16,7 +16,7 @@ export default class HeaderSearch extends PureComponent {
   };
   static propTypes = {
     className: PropTypes.string,
-    placeholder: PropTypes.string,
+    placeholder: PropTypes.number,
     onSearch: PropTypes.func,
     onPressEnter: PropTypes.func,
     defaultActiveFirstOption: PropTypes.bool,
@@ -81,7 +81,9 @@ export default class HeaderSearch extends PureComponent {
             onBlur={this.leaveSearchMode}
           />
         </AutoComplete>
+
       </span>
+
     );
   }
 }

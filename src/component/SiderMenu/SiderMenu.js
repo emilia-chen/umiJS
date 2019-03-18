@@ -23,9 +23,13 @@ const getIcon = icon => {
 };
 
 export const getMeunMatcheys = (flatMenuKeys, path) => {
-  return flatMenuKeys.filter(item => {
+ const result=flatMenuKeys.filter(item => {
+
     return pathToRegexp(item).test(path);
   });
+
+   return result;
+
 };
 
 export default class SiderMenu extends PureComponent {
@@ -182,6 +186,7 @@ export default class SiderMenu extends PureComponent {
     return this.menus.some(item => key && (item.key === key || item.path === key));
   };
   handleOpenChange = openKeys => {
+    console.log('open',openKeys)
     const lastOpenKey = openKeys[openKeys.length - 1];
     const moreThanOne = openKeys.filter(openKey => this.isMainMenu(openKey)).length > 1;
     this.setState({
@@ -207,7 +212,7 @@ export default class SiderMenu extends PureComponent {
         trigger={null}
         collapsible
         collapsed={collapsed}
-        breakpoint="lg"
+        breakpoint="ms"
         onCollapse={onCollapse}
         width={256}
         className={styles.sider}
